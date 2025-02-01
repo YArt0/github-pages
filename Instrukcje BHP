@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatyczny lektor</title>
+</head>
+<body>
+    <h1>Automatyczne czytanie tekstu 🔊</h1>
+    <p id="tekst"></p>
+
+    <script>
+        function getTextFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("text") || "Brak tekstu do przeczytania.";
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const msg = new SpeechSynthesisUtterance(text);
+                msg.lang = "pl-PL"; // Możesz zmienić na "en-US" itp.
+                window.speechSynthesis.speak(msg);
+            } else {
+                alert("Twoja przeglądarka nie obsługuje syntezatora mowy.");
+            }
+        }
+
+        const tekst = getTextFromUrl();
+        document.getElementById("tekst").innerText = tekst;
+        speakText(tekst);
+    </script>
+</body>
+</html>
